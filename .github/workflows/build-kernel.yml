@@ -1,26 +1,10 @@
 name: Build KernelSU
 on:
-  workflow_dispatch: # Кнопка ручного запуска
+  workflow_dispatch: # Это создаст ту самую кнопку
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y bc build-essential flex bison libssl-dev libelf-dev git
-
-      - name: Clone Kernel Source
-        run: |
-          git clone --depth=1 ССЫЛКА_НА_ВАШИ_ИСХОДНИКИ -b ВЕТКА kernel
-          
-      - name: Integrate KernelSU
-        run: |
-          cd kernel
-          curl -LSs "https://raw.githubusercontent.com" | bash -s main
-          
-      - name: Build Kernel
-        run: |
-          cd kernel
-          # Здесь команды компиляции (make)
+      - name: Hello
+        run: echo "Скрипт готов, нужны данные телефона"
