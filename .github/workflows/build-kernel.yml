@@ -6,22 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Dependencies
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Build Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc build-essential flex bison libssl-dev libelf-dev git
+          sudo apt-get install -y git python3 python3-pip
 
-      - name: Download GKI Kernel
+      - name: Setup KernelSU
         run: |
-          # Для Pixel 6 (ядро 5.10) используем официальный тулчейн
-          git clone --depth=1 https://android.googlesource.com -b android12-5.10 kernel
-
-      - name: Integrate KernelSU
-        run: |
-          cd kernel
+          echo "Пытаемся интегрировать KernelSU в GKI..."
+          # Здесь должен быть скрипт для 5.10 ядра
           curl -LSs "https://raw.githubusercontent.com" | bash -s main
-
-      - name: Build Boot Image
-        run: |
-          echo "Здесь запускается сборка для GKI..."
-          # Сборка GKI ядра занимает около 40 минут
