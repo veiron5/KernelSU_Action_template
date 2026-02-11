@@ -1,10 +1,27 @@
-name: Build KernelSU
+name: Build KernelSU Pixel 6
 on:
-  workflow_dispatch: # Это создаст ту самую кнопку
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello
-        run: echo "Скрипт готов, нужны данные телефона"
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc build-essential flex bison libssl-dev libelf-dev git
+
+      - name: Download GKI Kernel
+        run: |
+          # Для Pixel 6 (ядро 5.10) используем официальный тулчейн
+          git clone --depth=1 https://android.googlesource.com -b android12-5.10 kernel
+
+      - name: Integrate KernelSU
+        run: |
+          cd kernel
+          curl -LSs "https://raw.githubusercontent.com" | bash -s main
+
+      - name: Build Boot Image
+        run: |
+          echo "Здесь запускается сборка для GKI..."
+          # Сборка GKI ядра занимает около 40 минут
