@@ -1,21 +1,17 @@
-name: Build KernelSU for Pixel 6 (Android 16)
+name: Build KernelSU GKI (Pixel 6)
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build GKI with KernelSU
-        uses: daboynb/gki_kernel_action@main
+      - name: Build GKI Kernel
+        uses: utsushii/gki-build-action@main
         with:
+          arch: arm64
+          # Версия GKI для Pixel 6 на Android 16
           kernel_version: 5.10
-          # Для Android 16 берем актуальную ветку GKI
-          gki_common_branch: android12-5.10
+          # Включаем KernelSU
+          kernelsu: true
           kernelsu_version: main
-          # Добавляем поддержку KernelSU в конфиг
-          kprobes: true
-          overlayfs: true
